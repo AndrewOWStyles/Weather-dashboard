@@ -20,7 +20,7 @@ document.querySelector("#search-button").addEventListener("click", function(even
         console.log(firstCity.lon);
         
      // weather forecast api set to some coordinates
-        return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=6f754f65b6008bfea31fb1bd4a90e6ba`)
+        return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=6f754f65b6008bfea31fb1bd4a90e6ba`)
     })
     
     .then(response => response.json())
@@ -28,10 +28,12 @@ document.querySelector("#search-button").addEventListener("click", function(even
         
         console.log(data);
         let cityToday = document.createElement("div")
+        let todayTemp = Math.round(data.list[0].main.temp - 273)
         cityToday.innerHTML = 
-        `<h1>${moment(data.list[0].dt, "X").format("DD/MM/YYYY HH:mm:ss")}</h1>
-        <img src="http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png">
-        <h3>Temp: ${data.list[0].main.temp} °C</h3>
+        `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[0].dt, "X").format("DD/MM/YYYY HH:mm") + " "}
+        <img src="https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png"></h1>
+        
+        <h3>Temp: ${todayTemp} °C</h3>
         <h3>Wind: ${data.list[0].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[0].main.humidity} %</h3>
         `
