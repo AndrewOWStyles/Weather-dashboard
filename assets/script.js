@@ -8,6 +8,10 @@ let forecastWeek = document.querySelector("#forecastWeek")
 
 document.querySelector("#search-button").addEventListener("click", function(event){
     event.preventDefault();
+    createCard();
+})
+
+function createCard() {
     let location = locationInput.value;
     let queryURL = urlStart + location + LimitApiKey
     console.log(queryURL);
@@ -22,7 +26,7 @@ document.querySelector("#search-button").addEventListener("click", function(even
         console.log(firstCity.lat);
         console.log(firstCity.lon);
         
-     // weather forecast api set to some coordinates
+        // weather forecast api set to some coordinates
         return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=6f754f65b6008bfea31fb1bd4a90e6ba`)
     })
     
@@ -92,14 +96,7 @@ document.querySelector("#search-button").addEventListener("click", function(even
         <h3>Humidity: ${data.list[39].main.humidity} %</h3>
         </div>
         `
-        weekForecast.append(city1);
-        weekForecast.append(city2);
-        weekForecast.append(city3);
-        weekForecast.append(city4);
-        weekForecast.append(city5);
+        weekForecast.append(forecastWeek);
     })
-})
-function createCard() {
-    
 }
 // event.target.textContent to grab text of city button
