@@ -3,6 +3,8 @@ let locationInput = document.getElementById("search-input");
 let LimitApiKey = "&limit=5&appid=6f754f65b6008bfea31fb1bd4a90e6ba";
 let today = document.querySelector("#today")
 let weekForecast = document.querySelector("#forecast")
+let forecastToday = document.querySelector("#forecastToday")
+let forecastWeek = document.querySelector("#forecastWeek")
 
 document.querySelector("#search-button").addEventListener("click", function(event){
     event.preventDefault();
@@ -26,78 +28,71 @@ document.querySelector("#search-button").addEventListener("click", function(even
     
     .then(response => response.json())
     .then(data => {
-        
+        forecastToday.innerHTML = ""
+        let todayDiv = document.getElementById("forecastToday")
+        forecastWeek.innerHTML = ""
         console.log(data);
-        let cityToday = document.createElement("div")
         let todayTemp = Math.round(data.list[0].main.temp - 273)
-        cityToday.innerHTML = 
+        forecastToday.innerHTML = 
         `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[0].dt, "X").format("DD/MM/YYYY HH:mm") + " "}
         <img src="https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png"></h1>
         <h3>Temp: ${todayTemp} °C</h3>
         <h3>Wind: ${data.list[0].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[0].main.humidity} %</h3>
         `
-        cityToday.setAttribute("class", "todayFore");
-        today.append(cityToday);
-
+        todayDiv.setAttribute("class", "todayFore");
+        today.append(forecastToday);
 
         let city1 = document.createElement("div")
         let temp1 = Math.round(data.list[7].main.temp - 273)
-        city1.innerHTML = 
-        `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[7].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
+        let city2 = document.createElement("div")
+        let temp2 = Math.round(data.list[15].main.temp - 273)
+        let city3 = document.createElement("div")
+        let temp3 = Math.round(data.list[23].main.temp - 273)
+        let city4 = document.createElement("div")
+        let temp4 = Math.round(data.list[31].main.temp - 273)
+        let city5 = document.createElement("div")
+        let temp5 = Math.round(data.list[39].main.temp - 273)
+
+        forecastWeek.innerHTML = 
+        `<h1 class= "weekHeader">${data.city.name + " " + moment(data.list[7].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
         <h3><img src="https://openweathermap.org/img/wn/${data.list[7].weather[0].icon}@2x.png"}</h3>
         <h3>Temp: ${temp1} °C</h3>
         <h3>Wind: ${data.list[7].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[7].main.humidity} %</h3>
-        `
-        city1.setAttribute("class", "weekFore");
-        weekForecast.append(city1);
-
-        let city2 = document.createElement("div")
-        let temp2 = Math.round(data.list[15].main.temp - 273)
-        city2.innerHTML = 
-        `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[15].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
+        
+        <h1 class= "weekHeader">${data.city.name + " " + moment(data.list[15].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
         <h3><img src="https://openweathermap.org/img/wn/${data.list[15].weather[0].icon}@2x.png"}</h3>
         <h3>Temp: ${temp2} °C</h3>
         <h3>Wind: ${data.list[15].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[15].main.humidity} %</h3>
-        `
-        city2.setAttribute("class", "weekFore");
-        weekForecast.append(city2);
-
-        let city3 = document.createElement("div")
-        let temp3 = Math.round(data.list[23].main.temp - 273)
-        city3.innerHTML = 
-        `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[23].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
+        
+        <h1 class= "weekHeader">${data.city.name + " " + moment(data.list[23].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
         <h3><img src="https://openweathermap.org/img/wn/${data.list[23].weather[0].icon}@2x.png"}</h3>
         <h3>Temp: ${temp3} °C</h3>
         <h3>Wind: ${data.list[23].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[23].main.humidity} %</h3>
-        `
-        city3.setAttribute("class", "weekFore");
-        weekForecast.append(city3);
-
-        let city4 = document.createElement("div")
-        let temp4 = Math.round(data.list[31].main.temp - 273)
-        city4.innerHTML = 
-        `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[31].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
+        
+        <h1 class= "weekHeader">${data.city.name + " " + moment(data.list[31].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
         <h3><img src="https://openweathermap.org/img/wn/${data.list[31].weather[0].icon}@2x.png"}</h3>
         <h3>Temp: ${temp4} °C</h3>
         <h3>Wind: ${data.list[31].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[31].main.humidity} %</h3>
-        `
-        city4.setAttribute("class", "weekFore");
-        weekForecast.append(city4);
-
-        let city5 = document.createElement("div")
-        let temp5 = Math.round(data.list[39].main.temp - 273)
-        city5.innerHTML = 
-        `<h1 class= "todayHeader">${data.city.name + " " + moment(data.list[39].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
+        
+        <h1 class= "weekHeader">${data.city.name + " " + moment(data.list[39].dt, "X").format("DD/MM/YYYY HH:mm")}</h1>
         <h3><img src="https://openweathermap.org/img/wn/${data.list[39].weather[0].icon}@2x.png"}</h3>
         <h3>Temp: ${temp5} °C</h3>
         <h3>Wind: ${data.list[39].wind.speed} KPH</h3>
         <h3>Humidity: ${data.list[39].main.humidity} %</h3>
         `
+        city1.setAttribute("class", "weekFore");
+        weekForecast.append(city1);
+        city2.setAttribute("class", "weekFore");
+        weekForecast.append(city2);
+        city3.setAttribute("class", "weekFore");
+        weekForecast.append(city3);
+        city4.setAttribute("class", "weekFore");
+        weekForecast.append(city4);
         city5.setAttribute("class", "weekFore");
         weekForecast.append(city5);
     })
