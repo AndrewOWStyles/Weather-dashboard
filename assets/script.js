@@ -1,4 +1,4 @@
-let urlStart = "http://api.openweathermap.org/geo/1.0/direct?q=";
+let urlStart = "https://api.openweathermap.org/geo/1.0/direct?q=";
 let locationInput = document.getElementById("search-input");
 let LimitApiKey = "&limit=5&appid=6f754f65b6008bfea31fb1bd4a90e6ba";
 let today = document.querySelector("#today")
