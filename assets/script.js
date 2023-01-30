@@ -5,18 +5,56 @@ let today = document.querySelector("#today")
 let weekForecast = document.querySelector("#forecast")
 let forecastToday = document.querySelector("#forecastToday")
 let forecastWeek = document.querySelector("#forecastWeek")
+let history = document.querySelector("#history")
+let cityButtons = document.querySelector(".cityButtons")
+
+
+let cities = []
+
+startup();
+function startup() {
+    let savedCities = JSON.parse(localStorage.getItem("cities"));
+    if (savedCities) {
+        cities = savedCities;
+    }
+    createButton(cities);
+}
 
 document.querySelector("#search-button").addEventListener("click", function(event){
+    let location = locationInput.value
     event.preventDefault();
-    createCard();
+    if (!cities.includes(locationInput.value)) {
+        cities.push(locationInput.value);
+    }
+    createCard(location);
+    createButton();
+    savedCities();
 })
 
-function createCard() {
-    let location = locationInput.value;
+
+function savedCities() {
+    localStorage.setItem("cities", JSON.stringify(cities));
+    console.log(localStorage);
+}
+
+function createButton() {
+    cityButtons.innerHTML = "";
+    for (let i = 0; i < cities.length; i++) {
+        const city = cities[i];
+        let cityButton = document.createElement("button");
+        cityButton.setAttribute("class", "historyButton")
+        cityButton.innerHTML = city;
+        cityButtons.prepend(cityButton);
+    }
+    
+}
+
+
+
+function createCard(location) {
     let queryURL = urlStart + location + LimitApiKey
     console.log(queryURL);
-    // put full fetch inside event listener
-    // geo api that uses names of locations to get geographical coordinates (lat, lon)
+    
     fetch(queryURL)
     .then(response => response.json())
     .then(citiesFound => {
@@ -99,4 +137,11 @@ function createCard() {
         weekForecast.append(forecastWeek);
     })
 }
-// event.target.textContent to grab text of city button
+
+cityButtons.addEventListener("click", function (event) {
+    if (event.target.matches("button")) {
+      let location = event.target.textContent;
+      console.log(location);
+      createCard(location);
+    }
+  });
